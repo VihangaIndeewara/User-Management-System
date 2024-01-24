@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+    <style>
+
+        .glass {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 0, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        header{
+            background: #B8AA90;
+            height: 60px;
+            width: 100vw;
+        }
+
+        body{
+            width: 98.9vw;
+            height: 100vh;
+            position: absolute;
+        }
+
+        main{
+            width: 98.9vw;
+
+            background: white;
+            position: absolute;
+
+        }
+        #loginImg{
+
+            height: 500px;
+            width:  650px;
+            top: 80px;
+            position: relative;
+
+
+        }
+
+        #loginFormDiv{
+            top: 80px;
+            position: relative;
+        }
+
+        #loginFormDiv>label{
+            position: relative;
+            left:10px;
+        }
+
+        #loginButton{
+            width: 100%;
+        }
+
+        
+    </style>
+
+    <script>
+        function setDate(){
+            let date =new Date();
+            let formattedDate = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit',hour: "numeric",minute: "numeric", second: "numeric" }).format(date);
+
+            $("#createdDate").val(formattedDate)
+        }
+        setInterval(setDate, 1000);
+    </script>
+
+
+
+</head>
+<body onload="setDate()">
+<header>
+    <nav class="navbar bg-body-tertiary ">
+        <div class="container-fluid" >
+            <span class="navbar-brand mb-0 h1 fw-bold" >User Management System</span>
+        </div>
+
+
+       <button id="btnRegister" type="button" class="btn btn-sm glass" data-bs-toggle="modal" data-bs-target="#signUpModal" style="position: absolute; width:150px; top: 14px; right: 80px; font-weight: bold " >Sign Up</button>
+
+
+    </nav>
+    <div class="modal  modal-dialog modal-lg  " id="signUpModal" tabindex="-10" aria-labelledby="userSignUp"  aria-hidden="true" style="position: absolute; top: 0; right: 0; left: 0; bottom: 0">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header " style="background: #3A4D85; color: white">
+                    <h5 class="modal-title" id="saveModalTitle">Sign Up</h5>
+                </div>
+
+                <form id="signUpForm">
+                    <div class="modal-body  row">
+
+                        <div class="mb-3 col">
+                            <label for="txtUserId" class="form-label">User Id</label>
+                            <input type="text" class="form-control" id="txtUserId" name="userId" readonly>
+                            <span class="control-error"></span>
+                        </div>
+                        <div class="mb-3 col">
+                            <label for="txtUserName" class="form-label">User Name</label>
+                            <input type="text" class="form-control" id="txtUserName" placeholder="Kamal" name="userName">
+                            <span class="control-error"></span>
+                        </div>
+                        <div class="mb-3 col">
+                            <label for="txtPassword" class="form-label">Password</label>
+                            <input type="text" class="form-control" id="txtPassword" placeholder="1234" name="password">
+                            <span class="control-error"></span>
+                        </div>
+                    </div>
+
+                    <div class="modal-body  row">
+
+                        <div class="mb-3 col">
+                            <label for="txtFullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="txtFullName" placeholder="Kamal Perera" name="fullName">
+                            <span class="control-error"></span>
+                        </div>
+                        <div class="mb-3 col">
+                            <label for="txtMobileNo" class="form-label">Mobile No</label>
+                            <input type="text" class="form-control" id="txtMobileNo" placeholder="+94714202287" name="mobileNo">
+                            <span class="control-error"></span>
+                        </div>
+                        <div class="mb-3 col">
+                            <label for="txtNic" class="form-label">Nic</label>
+                            <input type="text" class="form-control" id="txtNic" placeholder="985759670v" name="nic">
+                            <span class="control-error"></span>
+                        </div>
+                        <div class="mb-3 col">
+                            <label for="createdDate" class="form-label">Date</label>
+                            <input class="form-control"  type="text" name="createdDate" id="createdDate"  readonly >
+                            <span class="control-error"></span>
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+                <div class="modal-footer">
+                    <button id="btnSignUpRegister" type="button" class="btn btn-success" style="width: 150px">Sign Up</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</header>
+
+<main>
+    <div class="container text-center ">
+        <div class="row justify-content-between">
+            <div  class="col-6 col-md-3 ">
+                <img id="loginImg" src="assets/images/login.jpg" class="glass" alt="login image">
+            </div>
+
+            <div id="loginFormDiv" class="col-4  ">
+                <form id="loginForm">
+                    <div class="position-absolute top-0 start-0 ">
+                        <label class="fw-bold fs-2 ">Login</label>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="mb-3">
+                        <label for="txtUsernameInput" class="form-label start-0 position-absolute">Username</label>
+                        <br>
+                        <input type="text" class="form-control" id="txtUsernameInput" name="loginUsername">
+                    </div>
+                    <br>
+                    <div class="mb-3">
+                        <label for="txtPasswordInput" class="form-label start-0 position-absolute">Password</label>
+                        <br>
+                        <input type="password" class="form-control" id="txtPasswordInput" name="LoginPassword">
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                 <button type="button" class="btn btn-primary" id="loginButton">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+
+<script src="../src/assets/js/bootstrap.min.js"></script>
+
+<script src="../src/assets/js/jquery-3.6.1.min.js"></script>
+
+
+<script>
+    let baseURL="http://localhost:8080/BackEnd_war/"
+
+    $("#btnSignUpRegister").click(function (){
+
+        if($("#txtUserName").val()=="" || $("#txtPassword").val()=="" || $("#txtFullName").val()==""||$("#txtMobileNo").val()=="" || $("#txtNic").val()==""){
+            alert("Please Fill Fields")
+        }else {
+            let formData = $("#signUpForm").serialize();
+
+
+            $.ajax({
+                url: baseURL + "user",
+                method: "post",
+                data: formData,
+                dataType: "json",
+                success: function (resp) {
+                    alert(resp.message)
+                    clearTexts()
+                    getLastUserId()
+                    setDate()
+                },
+                error: function (error) {
+                    let parse = JSON.parse(error.responseText);
+                    alert(parse.message)
+                }
+            })
+        }
+    })
+
+    getLastUserId();
+
+    function getLastUserId(){
+
+        $.ajax({
+            url:baseURL+"user?test=t",
+            method:"get",
+            success:function (resp){
+                if(resp.data==null){
+                    $("#txtUserId").val("U001")
+                }else {
+
+                    var newId = parseInt(resp.data.substring(1));
+                    newId = newId + 1;
+
+
+                    if (newId <= 9) {
+                        $("#txtUserId").val("U00" + newId);
+                    } else if (newId <= 99) {
+                        $("#txtUserId").val("U0" + newId);
+                    } else if (newId <= 999) {
+                        $("#txtUserId").val("U" + newId);
+                    }
+                }
+            },
+            error:function (err){
+                console.log("No ")
+            }
+        })
+    }
+
+
+    function clearTexts(){
+        $("#signUpForm :input").val("");
+    }
+
+
+    $("#loginButton").click(function(){
+        let username = $("#txtUsernameInput").val();
+
+        $.ajax({
+            url: baseURL+"user?username="+username,
+            method:"get",
+            success: function (response) {
+
+                if (response.data.password == $("#txtPasswordInput").val()) {
+                    window.location.replace("../src/pages/userDashboard.html")
+
+                }else{
+                    alert("Wrong Password")
+                }
+            },
+            error:function (err){
+                alert("Wrong Username")
+            }
+        })
+    })
+
+
+
+</script>
+
+
+</body>
+</html>

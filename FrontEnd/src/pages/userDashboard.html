@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management System</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+    <style>
+        .glass {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 0, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body{
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            background: #E3DDD3;
+        }
+
+      header{
+        background: #B8AA90;
+        height: 60px;
+        width: 100%;
+      }
+
+      #logoutDiv{
+          position: absolute;
+          top: 12px;
+          right: 20px;
+          width: 150px;
+          height: 30px;
+      }
+
+        main{
+            width:98%;
+            height: 90%;
+            position: absolute;
+        }
+
+      .div{
+          width: 80%;
+          height: 40%;
+          position: absolute;
+          left: 0;
+          right: 0;
+          margin: auto;
+
+      }
+
+      #inputDiv{
+
+          top: 50px;
+      }
+
+      #tableDiv{
+          top: 340px;
+
+      }
+
+      .button{
+          width: 500px;
+          height: 25px;
+          left: 0;
+          right: 0;
+          margin: auto;
+      }
+
+      .button>button{
+          font-size: 15px;
+          padding: 0;
+      }
+
+
+
+
+    </style>
+
+    <script>
+        function setDate(){
+            let date =new Date();
+            let formattedDate = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit',hour: "numeric",minute: "numeric", second: "numeric" }).format(date);
+
+
+            $("#createdDate").val(formattedDate)
+            $("#updatedDate").val(formattedDate)
+        }
+        setInterval(setDate, 1000);
+    </script>
+
+</head>
+<body onload="setDate()">
+<header>
+  <nav class="navbar bg-body-tertiary ">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1 ">User Management System</span>
+    </div>
+
+      <div id="logoutDiv">
+          <button type="button" class="btn btn-danger fw-bold" id="btnLogout">Log Out</button>
+      </div>
+  </nav>
+</header>
+
+<main>
+    <div class="row ">
+        <div id="inputDiv" class="div">
+            <br>
+            <form id="userForm">
+                <div class="row">
+                    <div class="form-group col">
+                        <label >User Id</label>
+                        <input class="form-control" id="txtUserId" required type="text" readonly name="userId">
+                    </div>
+                    <div class="form-group col">
+                        <label>Username</label>
+                        <input class="form-control" id="txtUserName" required type="text" placeholder="Kamal" name="userName">
+                    </div>
+                    <div class="form-group col">
+                        <label>Password</label>
+                        <input class="form-control" id="txtPassword" required type="text" placeholder="12345" name="password">
+
+                    </div>
+
+                </div>
+
+                <br>
+
+                <div class="row">
+                    <div class="form-group col">
+                        <label>Full Name</label>
+                        <input class="form-control" id="txtFullName" required type="text" placeholder="Kamal Perera" name="fullName">
+                    </div>
+                    <div class="form-group col">
+                        <label>Mobile No</label>
+                        <input class="form-control" id="txtMobileNo" required type="text" placeholder="+94714353255" name="mobileNo">
+                    </div>
+                    <div class="form-group col">
+                        <label >Nic</label>
+                        <input class="form-control" id="txtNic" type="text" placeholder="98471526936v" name="nic">
+                    </div>
+                    <div class="form-group col" style="display: none">
+                        <label>Date</label>
+                        <input class="form-control"  type="text" name="createdDate" id="createdDate" readonly >
+                    </div>
+                    <div class="form-group col" style="display: none">
+                        <label>Date</label>
+                        <input class="form-control"  type="text" name="updatedDate" id="updatedDate" readonly >
+                    </div>
+
+                </div>
+
+                <br>
+                <br>
+
+                <div class=" row">
+                    <div class="btn-group  gap-2 rounded button">
+                        <button type="button" class="btn btn-success fw-bold" id="btnSave" >Save</button>
+                        <button type="button" class="btn btn-warning fw-bold" id="btnUpdate" >Update</button>
+                        <button type="button" class="btn btn-danger fw-bold" id="btnDelete" >Delete</button>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+            </form>
+        </div>
+
+        <div id="tableDiv" class="div">
+            <table class="table table-light table-striped table-hover">
+                    <thead >
+                    <tr class="table-dark">
+                        <th scope="col">User Id</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Mobile No</th>
+                        <th scope="col">Nic</th>
+                        <th scope="col">Created Date</th>
+                        <th scope="col">Updated Date</th>
+                    </tr>
+                    </thead>
+                    <tbody id="userTable">
+
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/js/bootstrap.min.js"></script>
+
+<script src="../assets/js/jquery-3.6.1.min.js"></script>
+
+<script>
+
+    let baseURL="http://localhost:8080/BackEnd_war/"
+
+    loadAllUsers()
+    getLastUserId();
+
+
+    $("#btnLogout").click(function (){
+        window.location.replace("../index.html")
+    })
+
+    function loadAllUsers(){
+        $.ajax({
+            url: baseURL+"user",
+            success:function (resp){
+
+                $("#userTable").empty();
+                for (var r of resp.data) {
+                    $("#userTable").append('<tr><td>' + r.userId + '</td><td>' + r.userName + '</td><td>' + r.password + '</td><td>' + r.fullName + '</td><td>' + r.mobileNo + '</td><td>' + r.nic + '</td><td>' + r.createdDate + '</td><td>' + r.updatedDate + '</td></tr>')
+                }
+                bindTableRowEvents()
+
+
+            }
+        })
+    }
+
+    let createdDateTableRow;
+    function  bindTableRowEvents(){
+        $("#userTable>tr").click(function (){
+            $("#txtUserId").val($(this).children(":eq(0)").text());
+            $("#txtUserName").val($(this).children(":eq(1)").text());
+            $("#txtPassword").val($(this).children(":eq(2)").text());
+            $("#txtFullName").val($(this).children(":eq(3)").text());
+            $("#txtMobileNo").val($(this).children(":eq(4)").text());
+            $("#txtNic").val($(this).children(":eq(5)").text());
+
+            createdDateTableRow=$(this).children(":eq(6)").text();
+
+        })
+
+
+    }
+
+
+    function getLastUserId(){
+
+        $.ajax({
+            url:baseURL+"user?test=t",
+            method:"get",
+            success:function (resp){
+               if(resp.data==null){
+                   $("#txtUserId").val("U001")
+               }else {
+
+                   var newId = parseInt(resp.data.substring(1));
+                   newId = newId + 1;
+
+
+                   if (newId <= 9) {
+                       $("#txtUserId").val("U00" + newId);
+                   } else if (newId <= 99) {
+                       $("#txtUserId").val("U0" + newId);
+                   } else if (newId <= 999) {
+                       $("#txtUserId").val("U" + newId);
+                   }
+               }
+            },
+            error:function (err){
+                console.log("No ")
+            }
+        })
+    }
+
+
+    $("#btnSave").click(function (){
+
+        if($("#txtUserName").val()=="" || $("#txtPassword").val()=="" || $("#txtFullName").val()==""||$("#txtMobileNo").val()=="" || $("#txtNic").val()==""){
+            alert("Please Fill Fields")
+        }else {
+            let formData = $("#userForm").serialize();
+
+            $.ajax({
+                url: baseURL + "user",
+                method: "post",
+                data: formData,
+                dataType: "json",
+                success: function (resp) {
+                    alert(resp.message)
+                    clearTexts();
+                    loadAllUsers();
+                    setDate();
+                    getLastUserId();
+                },
+                error: function (error) {
+                    let parse = JSON.parse(error.responseText);
+                    alert(parse.message)
+                }
+            })
+        }
+    })
+
+
+
+    function clearTexts(){
+        $("#userForm :input").val("");
+    }
+
+    $("#btnUpdate").click(function (){
+        let userId=$("#txtUserId").val();
+        let userName=$("#txtUserName").val();
+        let password=$("#txtPassword").val();
+        let fullName=$("#txtFullName").val();
+        let mobileNo=$("#txtMobileNo").val();
+        let nic=$("#txtNic").val();
+        let updatedDate=$("#createdDate").val();
+
+        var userObj={
+            userId:userId,
+            userName:userName,
+            password:password,
+            fullName:fullName,
+            mobileNo:mobileNo,
+            nic:nic,
+            createdDate:createdDateTableRow,
+            updatedDate:updatedDate
+        }
+
+        $.ajax({
+            url:baseURL+"user",
+            method:"put",
+            contentType:"application/json",
+            dataType: "json",
+            data:JSON.stringify(userObj),
+            success:function (resp) {
+                alert(resp.message)
+                loadAllUsers()
+                getLastUserId()
+                clearTexts()
+            },
+            error:function (error){
+                alert(JSON.parse(error.responseText).message);
+
+            }
+        })
+
+    })
+
+
+    $("#btnDelete").click(function (){
+        let userId = $("#txtUserId").val();
+
+        $.ajax({
+            url:baseURL+"user?id="+userId,
+            method:"delete",
+            dataType: "json",
+            success:function (resp){
+                alert(resp.message)
+                getLastUserId()
+                loadAllUsers()
+                clearTexts()
+            },
+            error:function (err){
+                let parse = JSON.parse(err.responseText);
+                alert(parse.message)
+            }
+        })
+    })
+
+</script>
+
+</body>
+</html>
